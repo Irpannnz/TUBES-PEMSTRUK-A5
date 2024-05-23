@@ -9,12 +9,16 @@
 </head>
 <body>
     <h1>Calakus</h1>
-    <div></div>
-    <h2 id="score">0</h2>
-    <!-- 3x3 -->
+    <div id="gameStatus">
+        <h2 id="score">0</h2>
+        <h2 id="timer">60</h2>
+        </h2>
+        <button id="restartButton" style="display: none;"></button>
+        <button id="startButton" style="width: 130px; height: 60px; background-image: url('./play.png'); background-size: cover; background-color: transparent; border: none;"></button>
+    </div>
+    <!-- membuat papan/board 3x3 -->
     <div id="board"></div>
-    <!-- tombol restart game-->
-    <button id="restartButton" style="display: none;">Restart</button>
     <div class="cursor"></div>
+    <audio id="backgroundMusic" src="./BGSCalakus.mp3" loop></audio>
 </body>
 </html>

@@ -1,10 +1,17 @@
-let currMoleTile;
-let currPlantTile;
+let Tikusjahat;
+let Tikusbaik;
 let score = 0;
 let gameOver = false;
+let countDownTime = 60;
+let timerStarted = false; 
+
+const sound = new Audio("./smash.mp3");
 
 window.onload = function() {
-    setGame();
+    const startButton = document.getElementById('startButton');
+    startButton.addEventListener('click', function() {
+        startGame();
+    });
 
     const cursor = document.querySelector(".cursor");
     window.addEventListener('mousemove', e => {
@@ -18,95 +25,155 @@ window.onload = function() {
         cursor.classList.remove('active');
     });
 
-    // event listener untuk tombol restart
     document.getElementById('restartButton').addEventListener('click', function() {
         restartGame();
     });
 };
 
-function setGame() {
-    // Menyiapkan grid pada HTML
-    for (let i = 0; i < 9; i++) {
-        let tile = document.createElement("div");
-        tile.id = i.toString();
-        tile.addEventListener("click", selectTile);
-        document.getElementById("board").appendChild(tile);
-    }
-    setInterval(setMole, 1000); 
-    setInterval(setPlant, 2000);
+function startGame() {
+    // Menyembunyikan tombol start
+    document.getElementById('startButton').style.display = 'none';
+
+    // Memulai backsound
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    backgroundMusic.play();
+
+    setGame();
 }
 
-function getRandomTile() {
+function setGame() {
+    for (let i = 0; i < 9; i++) {
+        let hole = document.createElement("div");
+        hole.id = i.toString();
+        hole.addEventListener("click", selectHole);
+        document.getElementById("board").appendChild(hole);
+    }
+    setInterval(TikusJ, 1300);
+    setInterval(TikusB, 1100);
+}
+
+function getRandomHole() {
     let num = Math.floor(Math.random() * 9);
     return num.toString();
 }
 
-function setMole() {
+function TikusJ() {
     if (gameOver) {
         return;
     }
-    if (currMoleTile) {
-        currMoleTile.innerHTML = "";
+    if (Tikusjahat) {
+        Tikusjahat.innerHTML = "";
+        Tikusjahat.classList.remove('active'); 
     }
-    let mole = document.createElement("img");
-    mole.src = "./monty-mole.png";
+    let tikus = document.createElement("img");
+    tikus.src = "./tikus3.png";
 
-    let num = getRandomTile();
-    if (currPlantTile && currPlantTile.id == num) {
+    tikus.style.transform = "translateX(-10%)";
+    tikus.style.transform = "translateY(17%)";
+    tikus.style.width = "130px";
+    tikus.style.height = "100px";
+
+    let num = getRandomHole();
+    if (Tikusbaik && Tikusbaik.id == num) {
         return;
     }
-    currMoleTile = document.getElementById(num);
-    currMoleTile.appendChild(mole);
+    Tikusjahat = document.getElementById(num);
+    Tikusjahat.appendChild(tikus);
+    Tikusjahat.classList.add('active'); 
 }
 
-function setPlant() {
+function TikusB() {
     if (gameOver) {
         return;
     }
-    if (currPlantTile) {
-        currPlantTile.innerHTML = "";
+    if (Tikusbaik) {
+        Tikusbaik.innerHTML = "";
     }
-    let plant = document.createElement("img");
-    plant.src = "./piranha-plant.png";
+    let tikusX = document.createElement("img");
+    tikusX.src = "./tikus1.png";
 
-    let num = getRandomTile();
-    if (currMoleTile && currMoleTile.id == num) {
+    tikusX.style.transform = "translateX(10%)";
+    tikusX.style.transform = "translateY(5%)";
+    tikusX.style.width = "160px";
+    tikusX.style.height = "125px";
+
+    let num = getRandomHole();
+    if (Tikusjahat && Tikusjahat.id == num) {
         return;
     }
-    currPlantTile = document.getElementById(num);
-    currPlantTile.appendChild(plant);
+    Tikusbaik = document.getElementById(num);
+    Tikusbaik.appendChild(tikusX);
 }
 
-function selectTile() {
+function selectHole() {
     if (gameOver) {
         return;
     }
-    if (this == currMoleTile) {
+    if (!timerStarted) {
+        startTimer();
+        timerStarted = true;
+    }
+    if (this == Tikusjahat && this.classList.contains('active')) {
         score += 10;
-        document.getElementById("score").innerText = score.toString(); 
-    }
-    else if (this == currPlantTile) {
-        document.getElementById("score").innerText = "GAME OVER: " + score.toString(); 
+        document.getElementById("score").innerText = score.toString();
+        sound.play();
+        this.classList.remove('active'); // Agar tidak spam klik pada lubang yang sama
+        this.firstChild.src = "./tikus2.png"; // Ganti gambar tikus jahat 
+        setTimeout(() => {
+            this.innerHTML = "";
+            run();
+        }, 500);
+
+    } else if (this == Tikusbaik) {
+        document.getElementById("score").innerText = "GAME OVER: " + score.toString();
         gameOver = true;
-        showRestartButton(); // Menampilkan tombol restart saat permainan berakhir
+        sound.play();
+        this.firstChild.src = "./tikus0.png"; // Ganti gambar tikus baik saat game over
+        stopTimer();
+        showRestartButton(); 
     }
+}
+
+
+function startTimer() {
+    const interval = setInterval(function() {
+        countDownTime--;
+        document.getElementById('timer').innerText = countDownTime.toString();
+        if (countDownTime <= 0 || gameOver) {
+            clearInterval(interval);
+            document.getElementById('timer').innerText = 'Time is up!';
+            gameOver = true;
+            showRestartButton();
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    countDownTime = 0;
 }
 
 function restartGame() {
-    // Reset semua variabel ke nilai awal
     score = 0;
     gameOver = false;
-    currMoleTile = null;
-    currPlantTile = null;
-    document.getElementById("score").innerText = score.toString(); // Mengatur ulang tampilan skor
+    countDownTime = 60;
+    timerStarted = false;
+    Tikusjahat = null;
+    Tikusbaik = null;
+    document.getElementById("score").innerText = score.toString();
+    document.getElementById("timer").innerText = countDownTime.toString(); // Reset timer
 
-    // Hapus gambar-gambar yang ada di setiap tile
-    let tiles = document.querySelectorAll("#board > div");
-    tiles.forEach(tile => {
-        tile.innerHTML = "";
+    // Menghapus gambar pada lubang
+    let holes = document.querySelectorAll("#board > div");
+    holes.forEach(hole => {
+        hole.innerHTML = "";
+        hole.classList.remove('active');
     });
 
-    hideRestartButton(); // Sembunyikan tombol restart saat permainan dimulai kembali
+    hideRestartButton();
+
+    document.getElementById('startButton').style.display = 'none';
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    backgroundMusic.play();
 }
 
 function showRestartButton() {
