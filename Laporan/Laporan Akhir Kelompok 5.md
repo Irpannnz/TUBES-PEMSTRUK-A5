@@ -1,6 +1,4 @@
-# Calakus 
-CATOK PALA TIKUS
-
+# Calakus (Catuk Pala Tikus)
 - Irfan Zaki Riyanto (102301045) 100%
 - Muhammad Fikri Haikal Ariadma (10231063) 100%
 - Adonia Azarya T (10231007) 85%
