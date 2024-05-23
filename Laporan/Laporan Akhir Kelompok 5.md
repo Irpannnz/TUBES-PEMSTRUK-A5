@@ -19,8 +19,6 @@ Program yang kami buat terinspirasi dari program “Whac-A-Mole” yang diciptak
 
 Selain itu kami juga mencari refrensi dari program "Whac-A-Mole" yang diciptakan oleh Angle Brace <a href="#div_ref3">(Youtube, 2022)</a>. Disini kami mencari tahu bagaimana cara untuk membuat kustom kursor dan bagaimana cara ketika suatu tikus dipukul, dia akan berubah gambar.
 
-Adapun asset yang ada pada program ini, kami ambil sepenuhnya dari Canva. Hanya saja pada bagian backsound kami ambil dari Tiktok <a href="#div_ref4">(Tiktok, 2023)</a>. Selain itu untuk font yang kami gunakan adalah Super Boys yang kami dapatkan dari website fontspace <a href="#div_ref5">(Fontspace, 2023)</a>
-
 # Metode Pembuatan
 ## Inisialisasi Variabel dan Suara:
  * Variabel Tikus jahat dan Tikus baik digunakan untuk melacak lubang mana di mana tikus jahat atau baik muncul.
@@ -41,6 +39,8 @@ Adapun asset yang ada pada program ini, kami ambil sepenuhnya dari Canva. Hanya 
  * Fungsi restartGame() digunakan untuk mengatur ulang permainan saat pemain memilih untuk memulai ulang. Semua variabel diatur kembali ke nilai awal dan lubang dihapus.
 ## Interaksi dengan Pengguna:
  * Fungsi-fungsi window.addEventListener() digunakan untuk menanggapi pergerakan mouse dan klik mouse, serta untuk memulai ulang permainan saat tombol restart di klik.
+## Aset-aset yang Kami Gunakan
+  * Adapun asset yang ada pada program ini, kami ambil sepenuhnya dari Canva. Hanya saja pada bagian backsound kami ambil dari Tiktok <a href="#div_ref4">(Tiktok, 2023)</a>. Selain itu untuk font yang kami gunakan adalah Super Boys yang kami dapatkan dari website fontspace <a href="#div_ref5">(Fontspace, 2023)</a> 
 ## Tools dan Library yang kami gunakan adalah;
  * Program ini menggunakan bahasa pemrograman JavaScript.
  * Untuk menambahkan efek suara, digunakan elemen <audio> HTML5 dengan bantuan objek Audio di JavaScript.
